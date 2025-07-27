@@ -12,3 +12,25 @@ Cara Menjalankan Web:
   2 Setelah kontainer aktif (sekitar 3–4 menit), kamu dapat langsung mengakses data pengguna di tabel users yang dibuat oleh factory.
 Semua user memiliki password yang sama: password123 
 
+3. Masuk ke browser lalu jalankan http://localhost:8081/
+
+
+project-root/
+│
+├── docker-compose.yml
+│
+├── postgres/
+│   └── Dockerfile         # Dockerfile untuk PostgreSQL
+│
+├── laravel/
+│   └── Dockerfile         # Dockerfile Laravel PHP-FPM
+│   └── php/
+│       ├── start-container.sh    # Script entrypoint container Laravel
+│       └── laravel-cron          # Cron file (opsional)
+│
+├── nginx/
+│   ├── Dockerfile          # Dockerfile untuk Nginx
+│   └── default.conf        # Konfigurasi default Nginx
+│
+└── ../laravel_backend/
+    └── laravel/            # Source Laravel Project (composer.json, routes, app, etc.)
