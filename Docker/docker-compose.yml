@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
+    container_name: db_jejak_imani
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend_network
+
+  laravel_backend:
+    build:
+      context: .
+      dockerfile: laravel/Dockerfile
+    container_name: web_jejak_imani
+    depends_on:
+      - postgres
+    volumes:
+      - ../laravel_backend/laravel:/var/www
+    working_dir: /var/www
+    ports:
+      - "9000:9000"
+    command: /start-container.sh
+    networks:
+      - backend_network
+      - app_network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: proxy
+    ports:
+      - "8081:80"
+    volumes:
+      - ../laravel_backend/laravel:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - laravel_backend
+    networks:
+      - app_network
+
+volumes:
+  pgdata:
+
+networks:
+  backend_network:
+    driver: bridge
+  app_network:
+    driver: bridge
+
