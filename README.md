@@ -14,7 +14,7 @@ Semua user memiliki password yang sama: password123
 
 3. Masuk ke browser lalu jalankan http://localhost:8081/
 
-
+Letak source Laravel berada pada laravel_backend/laravel/ # Source Laravel Project (composer.json, routes, app, etc.)
 project-root/
 │
 ├── docker-compose.yml
